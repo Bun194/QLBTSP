@@ -1,0 +1,9 @@
+{
+    "name": "luon/lab3-luonvtpc06178-php2",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "require": {}
+}
