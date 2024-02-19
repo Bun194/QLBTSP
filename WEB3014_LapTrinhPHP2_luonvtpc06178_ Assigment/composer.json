@@ -3,7 +3,6 @@
     "description": "php2 ASM",
     "autoload": {
         "psr-4": {
-            "Luon\\Php2Asm\\": "src/",
             "App\\": "./App/"
         }
     },
@@ -13,5 +12,8 @@
             "email": "votanluon194@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpmailer/phpmailer": "^6.9",
+        "vlucas/phpdotenv": "^5.6"
+    }
 }

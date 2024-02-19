@@ -1,78 +1,88 @@
- <!-- partial -->
- <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-12 grid-margin stretch-card">
-                <div class="card corona-gradient-card">
-                  <div class="card-body py-0 px-0 px-sm-3">
-                    <div class="row align-items-center">
-                      <h1>Trang chủ</h1>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-4 col-sm-7 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-9">
-                        <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0">1</h3>
-                          <!-- <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p> -->
-                        </div>
-                      </div>
-                      <div class="col-3">
-                        <div class="icon icon-box-success ">
-                          <span class="mdi mdi-arrow-top-right icon-item"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <h6 class="text-muted font-weight-normal">Số lượng sản phẩm</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-4 col-sm-7 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-9">
-                        <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0">1</h3>
-                          <!-- <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p> -->
-                        </div>
-                      </div>
-                      <div class="col-3">
-                        <div class="icon icon-box-success">
-                          <span class="mdi mdi-arrow-top-right icon-item"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <h6 class="text-muted font-weight-normal">Số lượng phiếu bảo trì</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-4 col-sm-7 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-9">
-                        <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0">1</h3>
-                          <!-- <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p> -->
-                        </div>
-                      </div>
-                      <div class="col-3">
-                        <div class="icon icon-box-success ">
-                          <span class="mdi mdi-arrow-top-right icon-item"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <h6 class="text-muted font-weight-normal">Số lượng nhân viên</h6>
-                  </div>
-                </div>
-              </div>
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-12 grid-margin stretch-card">
+        <div class="card corona-gradient-card">
+          <div class="card-body py-0 px-0 px-sm-3">
+            <div class="row align-items-center">
+              <h1>Thống kê</h1>
             </div>
           </div>
-          <!-- content-wrapper ends -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Biểu đồ thống kê từng loại</h4>
+            <canvas id="doughnutChart" name="" style="height:250px"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Biểu đồ thống kê thu nhập</h4>
+            <canvas id="lineChart" style="height:250px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+  <script>
+    // Lấy dữ liệu từ PHP
+    var doughnutData = <?php echo $doughnutData; ?>;
+
+    // Vẽ biểu đồ Doughnut
+    var ctx = document.getElementById('doughnutChart').getContext('2d');
+    var doughnutChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: doughnutData,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)'
+          ]
+        }],
+        labels: ['Sản phẩm', 'Người dùng', 'Phiếu bảo trì'] // Tên nhãn cho các phần tử trong biểu đồ
+      },
+      options: {
+        responsive: true
+      }
+    });
+  </script>
+  <script>
+    // Lấy dữ liệu từ PHP
+    var lineChartData = <?php echo $lineChartData; ?>; // Đảm bảo rằng bạn đã có dữ liệu cho biểu đồ dạng line
+
+    // Vẽ biểu đồ Line
+    var ctx = document.getElementById('lineChart').getContext('2d');
+    var lineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: lineChartData.labels, // Danh sách các nhãn trên trục x
+        datasets: [{
+          label: 'Tổng thu nhập', // Nhãn của dữ liệu trong biểu đồ
+          data: lineChartData.data, // Dữ liệu cho biểu đồ
+          backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền của biểu đồ
+          borderColor: 'rgba(75, 192, 192, 1)', // Màu viền của biểu đồ
+          borderWidth: 1 // Độ rộng của đường viền
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true // Bắt đầu từ 0 trên trục y
+            }
+          }]
+        }
+      }
+    });
+  </script>

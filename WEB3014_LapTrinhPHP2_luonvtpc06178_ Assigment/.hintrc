@@ -36,6 +36,7 @@
           "-webkit-tap-highlight-color"
         ]
       }
-    ]
+    ],
+    "disown-opener": "off"
   }
 }

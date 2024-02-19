@@ -87,34 +87,75 @@ $(function() {
   };
 
   
-  var doughnutPieData = {
-    datasets: [{
-      data: [30, 40, 30],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-    }],
+  // var doughnutPieData = {
+  //   datasets: [{
+  //     data: [30, 40, 30],
+  //     backgroundColor: [
+  //       'rgba(255, 99, 132, 0.5)',
+  //       'rgba(54, 162, 235, 0.5)',
+  //       'rgba(255, 206, 86, 0.5)',
+  //       'rgba(75, 192, 192, 0.5)',
+  //       'rgba(153, 102, 255, 0.5)',
+  //       'rgba(255, 159, 64, 0.5)'
+  //     ],
+  //     borderColor: [
+  //       'rgba(255,99,132,1)',
+  //       'rgba(54, 162, 235, 1)',
+  //       'rgba(255, 206, 86, 1)',
+  //       'rgba(75, 192, 192, 1)',
+  //       'rgba(153, 102, 255, 1)',
+  //       'rgba(255, 159, 64, 1)'
+  //     ],
+  //   }],
 
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-      'Pink',
-      'Blue',
-      'Yellow',
-    ]
-  };
+  //   // These labels appear in the legend and in the tooltips when hovering different arcs
+  //   labels: [
+  //     'Pink',
+  //     'Blue',
+  //     'Yellow',
+  //   ]
+  // };
+  var doughnutPieData = {
+  datasets: [{
+    data: [],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.5)',
+      'rgba(54, 162, 235, 0.5)',
+      'rgba(255, 206, 86, 0.5)',
+      'rgba(75, 192, 192, 0.5)',
+      'rgba(153, 102, 255, 0.5)',
+      'rgba(255, 159, 64, 0.5)'
+    ],
+    borderColor: [
+      'rgba(255,99,132,1)',
+      'rgba(54, 162, 235, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(153, 102, 255, 1)',
+      'rgba(255, 159, 64, 1)'
+    ],
+  }],
+
+  labels: []
+};
+
+// Sử dụng Ajax để tải dữ liệu từ tệp PHP
+$.ajax({
+  url: 'HomeController.php',
+  type: 'GET',
+  dataType: 'json',
+  success: function(response) {
+    doughnutPieData.datasets[0].data = response;
+    doughnutPieData.labels = Object.keys(response);
+    // Khởi tạo biểu đồ Doughnut Chart ở đây
+    // Cập nhật dữ liệu cho biểu đồ dạng line chart
+    // updateLineChart();
+  },
+  error: function(xhr, status, error) {
+    console.error(error);
+  }
+});
+
   var doughnutPieOptions = {
     responsive: true,
     animation: {
@@ -307,23 +348,23 @@ $(function() {
     });
   }
 
-  if ($("#lineChart").length) {
-    var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
-    var lineChart = new Chart(lineChartCanvas, {
-      type: 'line',
-      data: data,
-      options: options
-    });
-  }
+  // if ($("#lineChart").length) {
+  //   var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+  //   var lineChart = new Chart(lineChartCanvas, {
+  //     type: 'line',
+  //     data: data,
+  //     options: options
+  //   });
+  // }
 
-  if ($("#linechart-multi").length) {
-    var multiLineCanvas = $("#linechart-multi").get(0).getContext("2d");
-    var lineChart = new Chart(multiLineCanvas, {
-      type: 'line',
-      data: multiLineData,
-      options: options
-    });
-  }
+  // if ($("#linechart-multi").length) {
+  //   var multiLineCanvas = $("#linechart-multi").get(0).getContext("2d");
+  //   var lineChart = new Chart(multiLineCanvas, {
+  //     type: 'line',
+  //     data: multiLineData,
+  //     options: options
+  //   });
+  // }
 
   if ($("#areachart-multi").length) {
     var multiAreaCanvas = $("#areachart-multi").get(0).getContext("2d");
